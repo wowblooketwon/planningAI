@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lil Scoom Chat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="phone">
+    <div class="header">Lil Scoom AI Chat</div>
+    <div id="chat" class="chat-window">
+      <div class="message bot">Wsg bru I'm Lil Scoom 😤 Ask me sum</div>
+    </div>
+
+    <form id="chat-form" class="input-area">
+      <input type="text" id="chat-input" placeholder="Type here..." autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+    const chat = document.getElementById('chat');
+
+    function appendMessage(type, text) {
+      const msg = document.createElement('div');
+      msg.className = 'message ' + type;
+      msg.textContent = text;
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      appendMessage('user', userText);
+      input.value = '';
+
+      // Fake AI reply after 1 sec (since no backend)
+      appendMessage('bot', 'Scoom thinking...');
+      setTimeout(() => {
+        // Simple random replies
+        const replies = [
+          "Wsg bru, I ain't sure 'bout that.",
+          "Bru, that sounds lit!",
+          "Scoom here, what else you want?",
+          "Can't help with that right now, sorry bro.",
+          "Ask me som more, I'm listenin'."
+        ];
+        const reply = replies[Math.floor(Math.random() * replies.length)];
+        // Remove 'thinking...' msg
+        const thinkingMsg = chat.querySelector('.message.bot:last-child');
+        if (thinkingMsg) thinkingMsg.remove();
+
+        appendMessage('bot', reply);
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>
